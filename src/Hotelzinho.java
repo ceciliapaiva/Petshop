@@ -18,7 +18,7 @@ public class Hotelzinho extends Servicos{
         this.cod = getCodigo();
         this.desc = "Hotel";
         this.data = getDataServico();
-        this.tamanho = getTamanhoAnimal();
+        this.tamanhoAnimal = tamanho;
         this.quantHoras = quantHoras;
         this.precoHotel = getPreco();
         hospedagensDoDia = new ArrayList<>();

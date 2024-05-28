@@ -16,14 +16,14 @@ public class Tosa extends Servicos{
         this.cod = getCodigo();
         this.desc = "Tosa";
         this.data = getDataServico();
-        this.tamanho = getTamanhoAnimal();
+        this.tamanhoAnimal = tamanho;
         this.precoTosa = getPreco();
         tosasDoDia = new ArrayList<>();
     }
 
     @Override
     public double calcularPreco() {
-        String tamanhoAnimal = getTamanhoAnimal();
+        tamanho = getTamanhoAnimal();
 
         switch (tamanhoAnimal){
             case "P":
