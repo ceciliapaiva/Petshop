@@ -1,19 +1,24 @@
 package src;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tosa extends Servicos{
-    long cod = getCodigo();
-    String desc = "Tosa";
-    LocalDateTime data = getDataServico();
+    long cod;
+    String desc;
+    LocalDateTime data;
     String tamanho;
     double precoTosa;
+    List<Servicos> tosasDoDia;
 
-    public Tosa(long cod, LocalDateTime data, String tamanho, double precoTosa) {
-        this.cod = cod;
-        this.data = LocalDateTime.now();
-        this.tamanho = tamanho;
-        this.precoTosa = precoTosa;
+    public Tosa(String tamanho) {
+        this.cod = getCodigo();
+        this.desc = "Tosa";
+        this.data = getDataServico();
+        this.tamanho = getTamanhoAnimal();
+        this.precoTosa = getPreco();
+        tosasDoDia = new ArrayList<>();
     }
 
     @Override
@@ -42,7 +47,10 @@ public class Tosa extends Servicos{
     }
 
     @Override
-    public void addListaServicos(Servicos servico) {
-        super.addListaServicos(servico);
+    public void registrarServico(Servicos servico) {
+        if (servico instanceof Tosa){
+            tosasDoDia.add(servico);
+            super.registrarServico(servico);
+        }
     }
 }

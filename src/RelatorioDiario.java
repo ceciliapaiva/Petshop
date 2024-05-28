@@ -7,7 +7,7 @@ public class RelatorioDiario {
     List<Servicos> servicosDoDia = new ArrayList<>();
     double totalDeVendas;
 
-    public void registrarServicos(List<Servicos> lista) {
+    public void addServicos(List<Servicos> lista) {
         servicosDoDia.addAll(lista);
     }
 

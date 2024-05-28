@@ -1,20 +1,27 @@
 package src;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Banho extends Servicos{
-    long cod = getCodigo();
-    String desc = "Banho";
-    LocalDateTime data = getDataServico();
-    static String tamanho;
+    long cod;
+    String desc;
+    LocalDateTime data;
+    String tamanho;
     String tamanhoPelo;
-    double precoBanho = calcularPreco();
+    double precoBanho;
+    List<Servicos> banhosDoDia;
 
-    public Banho(long cod, LocalDateTime data, String tamanhoPelo, double precoBanho) {
-        this.cod = cod;
-        this.data = LocalDateTime.now();
+    public Banho(String tamanho, String tamanhoPelo) {
+        super();
+        this.cod = getCodigo();
+        this.desc = "Banho";
+        this.data = getDataServico();
+        this.tamanho = getTamanhoAnimal();
         this.tamanhoPelo = tamanhoPelo;
-        this.precoBanho = precoBanho;
+        this.precoBanho = getPreco();
+        banhosDoDia = new ArrayList<>();
     }
 
     @Override
@@ -54,8 +61,11 @@ public class Banho extends Servicos{
     }
 
     @Override
-    public void addListaServicos(Servicos servico) {
-        super.addListaServicos(servico);
+    public void registrarServico(Servicos servico) {
+        if (servico instanceof Banho){
+            banhosDoDia.add(servico);
+            super.registrarServico(servico);
+        }
     }
 
     @Override

@@ -1,23 +1,27 @@
 package src;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Hotelzinho extends Servicos{
 
     long cod = getCodigo();
-    String desc = "Hotelzinho";
+    String desc;
     LocalDateTime data = getDataServico();
     String tamanho;
     float quantHoras;
-    double precoHotel = calcularPreco();
+    double precoHotel;
+    List<Servicos> hospedagensDoDia;
 
-    public Hotelzinho(long cod, LocalDateTime data, String tamanho, float quantHoras, double precoHotel) {
-        this.cod = cod;
-        this.data = LocalDateTime.now();
-        this.tamanho = tamanho;
+    public Hotelzinho(String tamanho, float quantHoras) {
+        this.cod = getCodigo();
+        this.desc = "Hotel";
+        this.data = getDataServico();
+        this.tamanho = getTamanhoAnimal();
         this.quantHoras = quantHoras;
-        this.precoHotel = precoHotel;
+        this.precoHotel = getPreco();
+        hospedagensDoDia = new ArrayList<>();
     }
 
     @Override
@@ -43,8 +47,11 @@ public class Hotelzinho extends Servicos{
     }
 
     @Override
-    public void addListaServicos(Servicos servico) {
-        super.addListaServicos(servico);
+    public void registrarServico(Servicos servico) {
+        if (servico instanceof Hotelzinho){
+            hospedagensDoDia.add(servico);
+            super.registrarServico(servico);
+        }
     }
 
     @Override
