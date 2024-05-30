@@ -7,22 +7,21 @@ public class RelatorioDiario {
     List<Servicos> servicosDoDia = new ArrayList<>();
     double totalDeVendas;
 
-    public void addServicos(List<Servicos> lista) {
-        servicosDoDia.addAll(lista);
+    public void addServicos(Servicos servico) {
+        servicosDoDia.add(servico);
+        totalDeVendas += servico.getPreco();
     }
 
     public double calculaTotal(){
-        for (Servicos s : servicosDoDia){
-            totalDeVendas += s.getPreco();
-        }
         return totalDeVendas;
     }
 
     public String exibirRelatorio() {
-        String relatorioSTR = "";
+        StringBuilder relatorioSTR = new StringBuilder();
         for (Servicos s : servicosDoDia){
-            relatorioSTR = s.toString() + "\n __________________________________________" + " Total arrecadado: R$" + calculaTotal();
+            relatorioSTR.append(s.toString()).append("\n________________________________________________\n");
         }
-        return relatorioSTR;
+        relatorioSTR.append(String.format("Total arrecadado: R$%.2f%n", calculaTotal()));
+        return relatorioSTR.toString();
     }
 }

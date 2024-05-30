@@ -6,22 +6,19 @@ import java.util.List;
 import java.lang.String;
 
 public class Banho extends Servicos{
-    long cod;
-    String desc;
     LocalDateTime data;
     String tamanho;
     String tamanhoPelo;
     double precoBanho;
     List<Servicos> banhosDoDia;
 
-    public Banho(String tamanhoAnimal, String tamanhoPelo) {
+    public Banho(String tamanho, String tamanhoPelo) {
         super();
-        this.cod = getCodigo();
-        this.desc = "Banho";
+        this.descricao = "Banho";
         this.data = getDataServico();
-        this.tamanhoAnimal = tamanhoAnimal;
+        this.tamanhoAnimal = tamanho;
         this.tamanhoPelo = tamanhoPelo;
-        this.precoBanho = 0.0;
+        this.precoBanho = calcularPreco();
         banhosDoDia = new ArrayList<>();
     }
 
@@ -31,43 +28,29 @@ public class Banho extends Servicos{
 
         if (tamanho.equalsIgnoreCase("P")){
             precoBanho += 20.0;
-            if (tamanhoPelo.equalsIgnoreCase("curto")){
-
-            } else if (tamanhoPelo.equalsIgnoreCase("medio")) {
-                precoBanho += 10.0;
-            } else if (tamanhoPelo.equalsIgnoreCase("médio")) {
-                precoBanho += 10.0;
-            } else if (tamanhoPelo.equalsIgnoreCase("longo")) {
-                precoBanho += 20.0;
-            }
 
         } else if (tamanho.equalsIgnoreCase("M")){
             precoBanho += 30.0;
-            if (tamanhoPelo.equalsIgnoreCase("curto")){
-            } else if (tamanhoPelo.equalsIgnoreCase("medio")) {
-                precoBanho += 10.0;
-            } else if (tamanhoPelo.equalsIgnoreCase("longo")) {
-                precoBanho += 20.0;
-            }
+
         } else if (tamanho.equalsIgnoreCase("G")){
             precoBanho += 40.0;
-            if (tamanhoPelo.equalsIgnoreCase("curto")){
 
-            } else if (tamanhoPelo.equalsIgnoreCase("medio")) {
-                precoBanho += 10.0;
-            } else if (tamanhoPelo.equalsIgnoreCase("longo")) {
-                precoBanho += 20.0;
-            }
         }
+
+        if (tamanhoPelo.equalsIgnoreCase("medio") || tamanhoPelo.equalsIgnoreCase("médio")) {
+            precoBanho += 10.0;
+        } else if (tamanhoPelo.equalsIgnoreCase("longo")) {
+            precoBanho += 20.0;
+        }
+
+        this.preco = precoBanho;
         return precoBanho;
     }
 
     @Override
-    public void registrarServico(Servicos servico) {
-        if (servico instanceof Banho){
+    public void registrarServico(RelatorioDiario relatorio, Servicos servico) {
             banhosDoDia.add(servico);
-            super.registrarServico(servico);
-        }
+            relatorio.addServicos(servico);
     }
 
     @Override
@@ -82,5 +65,10 @@ public class Banho extends Servicos{
     @Override
     public String getTamanhoAnimal() {
         return super.getTamanhoAnimal();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Serviço: %s%nCódigo: %d%nTamanho do Pelo: %s%n%s", getDescricao(), getCodigo(), tamanhoPelo.toUpperCase() ,super.toString());
     }
 }

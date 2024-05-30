@@ -5,19 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tosa extends Servicos{
-    long cod;
-    String desc;
     LocalDateTime data;
     String tamanho;
     double precoTosa;
     List<Servicos> tosasDoDia;
 
     public Tosa(String tamanho) {
-        this.cod = getCodigo();
-        this.desc = "Tosa";
+        this.codigo = getCodigo();
+        this.descricao = "Tosa";
         this.data = getDataServico();
         this.tamanhoAnimal = tamanho;
-        this.precoTosa = getPreco();
+        this.precoTosa = calcularPreco();
         tosasDoDia = new ArrayList<>();
     }
 
@@ -25,19 +23,14 @@ public class Tosa extends Servicos{
     public double calcularPreco() {
         tamanho = getTamanhoAnimal();
 
-        switch (tamanhoAnimal){
-            case "P":
-                precoTosa = 22.0;
-                break;
-            case "M":
-                precoTosa = 30.0;
-                break;
-            case "G":
-                precoTosa = 40.0;
-                break;
-            default: precoTosa = 0.0;
-                break;
+        if (tamanhoAnimal.equalsIgnoreCase("P")) {
+            precoTosa += 22.0;
+        } else if (tamanhoAnimal.equalsIgnoreCase("M")) {
+            precoTosa += 30.0;
+        } else if (tamanhoAnimal.equalsIgnoreCase("G")) {
+            precoTosa += 40.0;
         }
+        this.preco = precoTosa;
         return precoTosa;
     }
 
@@ -47,10 +40,15 @@ public class Tosa extends Servicos{
     }
 
     @Override
-    public void registrarServico(Servicos servico) {
+    public void registrarServico(RelatorioDiario relatorio, Servicos servico) {
         if (servico instanceof Tosa){
             tosasDoDia.add(servico);
-            super.registrarServico(servico);
+            relatorio.addServicos(servico);
         }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Serviço: %s%nCódigo: %d%n%s", getDescricao(), getCodigo(), super.toString());
     }
 }

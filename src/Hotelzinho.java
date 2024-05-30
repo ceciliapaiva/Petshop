@@ -6,21 +6,19 @@ import java.util.List;
 
 public class Hotelzinho extends Servicos{
 
-    long cod = getCodigo();
-    String desc;
     LocalDateTime data = getDataServico();
     String tamanho;
-    float quantHoras;
+    double quantHoras;
     double precoHotel;
     List<Servicos> hospedagensDoDia;
 
-    public Hotelzinho(String tamanho, float quantHoras) {
-        this.cod = getCodigo();
-        this.desc = "Hotel";
+    public Hotelzinho(String tamanho, double quantHoras) {
+        this.codigo = getCodigo();
+        this.descricao = "Hotel";
         this.data = getDataServico();
         this.tamanhoAnimal = tamanho;
         this.quantHoras = quantHoras;
-        this.precoHotel = getPreco();
+        this.precoHotel = calcularPreco();
         hospedagensDoDia = new ArrayList<>();
     }
 
@@ -28,29 +26,23 @@ public class Hotelzinho extends Servicos{
     public double calcularPreco() {
         precoHotel = 0.0;
         String tamanhoAnimal = getTamanhoAnimal();
-        float horas = getQuantHoras();
 
-        switch (tamanhoAnimal){
-            case "P":
-                precoHotel += horas * 12.0;
-                break;
-            case "M":
-                precoHotel += horas * 18.0;
-                break;
-            case "G":
-                precoHotel += horas * 25.0;
-                break;
-            default: precoHotel = 0.0;
-                break;
+        if (tamanhoAnimal.equalsIgnoreCase("P")) {
+            precoHotel += quantHoras * 12.0;
+        } else if (tamanhoAnimal.equalsIgnoreCase("M")) {
+            precoHotel += quantHoras * 18.0;
+        } else if (tamanhoAnimal.equalsIgnoreCase("G")) {
+            precoHotel += quantHoras * 25.0;
         }
+        this.preco = precoHotel;
         return precoHotel;
     }
 
     @Override
-    public void registrarServico(Servicos servico) {
+    public void registrarServico(RelatorioDiario relatorio, Servicos servico) {
         if (servico instanceof Hotelzinho){
             hospedagensDoDia.add(servico);
-            super.registrarServico(servico);
+            relatorio.addServicos(servico);
         }
     }
 
@@ -59,7 +51,12 @@ public class Hotelzinho extends Servicos{
         return super.getDescricao();
     }
 
-    public float getQuantHoras() {
+    public double getQuantHoras() {
         return quantHoras;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Serviço: %s%nCódigo: %d%nHoras de hospedagem: %.2f%n%s", getDescricao(), getCodigo(), quantHoras, super.toString());
     }
 }

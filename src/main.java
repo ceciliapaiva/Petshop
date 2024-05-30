@@ -35,10 +35,10 @@ public class main {
                                 tamanhoPelo = sc.nextLine();
 
                                 banho = new Banho(tamanho, tamanhoPelo);
-                                System.out.println("Preço do banho: R$" + banho.calcularPreco());
+                                System.out.println("Preço do banho: R$" + banho.getPreco());
                                 System.out.println("Deseja registrar este serviço?\n[1] Sim      [2] Não");
                                 simOUnao = sc.nextInt();
-                                if (simOUnao == 1) banho.registrarServico(banho);
+                                if (simOUnao == 1) banho.registrarServico(relatorioDiario, banho);
                             break;
 
                             case 2: // Hotel
@@ -46,13 +46,13 @@ public class main {
                                 sc.nextLine();
                                 tamanho = sc.nextLine();
                                 System.out.println("Quantas horas de hospedagem? (Use virgula)");
-                                float quantHoras = sc.nextFloat();
+                                double quantHoras = sc.nextDouble();
 
                                 hotel = new Hotelzinho(tamanho, quantHoras);
-                                System.out.println("Preço da hospedagem: R$" + hotel.calcularPreco());
+                                System.out.printf("Preço da hospedagem: R$ %.2f%n", hotel.getPreco());
                                 System.out.println("Deseja registrar este serviço?\n[1] Sim      [2] Não");
                                 simOUnao = sc.nextInt();
-                                if (simOUnao == 1) hotel.registrarServico(hotel);
+                                if (simOUnao == 1) hotel.registrarServico(relatorioDiario, hotel);
                             break;
 
                             case 3: // Tosa
@@ -61,17 +61,22 @@ public class main {
                                 tamanho = sc.nextLine();
 
                                 tosa = new Tosa(tamanho);
-                                System.out.println("Preço da tosa: R$" + tosa.calcularPreco());
+                                System.out.println("Preço da tosa: R$" + tosa.getPreco());
                                 System.out.println("Deseja registrar este serviço?\n[1] Sim      [2] Não");
                                 simOUnao = sc.nextInt();
-                                if (simOUnao == 1) tosa.registrarServico(tosa);
+                                if (simOUnao == 1) tosa.registrarServico(relatorioDiario, tosa);
                             break;
                         }
                     }
                 break;
                 case 2: // Exibir inventário
                     System.out.println(relatorioDiario.exibirRelatorio());
-                    System.out.println("O arrecadamento total de hoje foi R$" + relatorioDiario.calculaTotal());
+                break;
+                case 3: // Sair
+                System.out.println("Saindo do sistema...");
+                break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
                 break;
             }
         }
@@ -79,12 +84,12 @@ public class main {
     }
 
     public static String menu() {
-        String menu = "[1] Registrar serviço\n[2] Exibir inventário do dia\n[3] Sair do siatema";
+        String menu = "[1] Registrar serviço\n[2] Exibir inventário do dia\n[3] Sair do sistema";
         return menu;
     }
 
     public static String menuServico(){
-        String menuServicos = "[1] Banho\n[2] Hotel\n[3] Tosa\n[4] Cancelar pedido";
+        String menuServicos = "[1] Banho\n[2] Hotel\n[3] Tosa\n[4] Voltar";
         return menuServicos;
     }
 
